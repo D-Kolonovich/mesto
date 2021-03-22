@@ -13,6 +13,6 @@
 }
 @media screen and (max-width: 640px) {
     .profile__info {
-        grid-template-columns: 245px 20px;
+        grid-template-columns: 217px 20px;
     }
 }   
