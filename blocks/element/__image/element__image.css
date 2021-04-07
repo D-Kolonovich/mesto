@@ -3,16 +3,16 @@
     height: 282px;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 946px) {
     .element__image {
         height: 350px;
     }
 }
-@media screen and (max-width: 800px) {
+/* @media screen and (max-width: 800px) {
     .element__image {
         height: 80%;
     }
-}
+} */
 @media screen and (max-width: 640px) {
     .element__image {
         height: 350px;
