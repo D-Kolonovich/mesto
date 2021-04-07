@@ -35,7 +35,7 @@ const popupDescription = document.querySelector('.popup__description');//опи�
 
 //
 const popupContainer = popupPicture.querySelector('.popup__container');
-const popupPictureTypeClose = popupContainer.querySelector('.popup__picture_type_close');
+const popupPictureTypeClose = popupContainer.querySelector('.popup__button_type_close');
 
 const initialCards = [
     {
