@@ -1,15 +1,12 @@
-
 // popupEdit
 const popupEdit = document.querySelector('.popup_type_edit-profile');
 const editButton = document.querySelector('.profile__button_type_edit');
-const closeButton = popupEdit.querySelector('.popup__button');
+const editProfileCloseBtn = popupEdit.querySelector('.popup__button');
 const profileName = document.querySelector('.profile__name');
 const profileDescription = document.querySelector('.profile__description');
-const formElement = popupEdit.querySelector('.form');
-const inputName = formElement.querySelector('.form__info_type_name');
-const inputjob = formElement.querySelector('.form__info_type_job');
-
-
+const formEditProfile = popupEdit.querySelector('.form');
+const inputName = formEditProfile.querySelector('.form__info_type_name');
+const inputjob = formEditProfile.querySelector('.form__info_type_job');
 
 //popupAdd
 
@@ -20,50 +17,17 @@ const formAdd = document.querySelector('.form-add'); // форма
 const inputFormTitle = formAdd.querySelector('.form__info_type_title');
 const inputFormLink = formAdd.querySelector('.form__info_type_link');
 
-
-
 // эелементы(карточка с изображением и текстом)
 const containerElements = document.querySelector('.elements');
 const elementTemplate = document.querySelector('.template-element').content.querySelector('.element');
-
 //
 const popupPicture = document.querySelector('.popup_type_picture');
-
 // изображение на весь экран(popup)
 const popupImage = document.querySelector('.popup__image'); //изображение
 const popupDescription = document.querySelector('.popup__description');//описание к изображению
-
 //
 const popupContainer = popupPicture.querySelector('.popup__container');
 const popupPictureTypeClose = popupContainer.querySelector('.popup__button_type_close');
-
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
-
  
 // открытие popup
 function openPopup(popup) {
@@ -76,7 +40,7 @@ function closePopup(popup) {
 
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
-function formSubmitHandler (evt) {
+function formEditProfileSubmitHandler (evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.                         
     // Вставьте новые значения с помощью textContent
     profileName.textContent = inputName.value;
@@ -102,6 +66,7 @@ function createElement(item) {
   // обработчики карточки
   elementImage.addEventListener('click', () => {
     popupImage.src = item.link;
+    popupImage.alt = item.name;
     popupDescription.textContent = item.name;
 
     openPopup(popupPicture);
@@ -124,7 +89,7 @@ initialCards.forEach(item => {
 
 // Обработчик «отправки» формы Add, хотя пока
 // она никуда отправляться не будет
-function submitHandlerFormAdd (evt) {
+function formAddCardSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.                         
   // 
   renderCard({   
@@ -144,16 +109,19 @@ editButton.addEventListener('click', () => {
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler);
+formEditProfile.addEventListener('submit', formEditProfileSubmitHandler);
 
-closeButton.addEventListener('click', () => closePopup(popupEdit));
+editProfileCloseBtn.addEventListener('click', () => closePopup(popupEdit));
 
 //слушатель открыть popupAdd
 openAddPopupButton.addEventListener('click', () => openPopup(popupAdd));
 //слушатель закрыть popupAdd добавление карточки
-closeAddPopupButton.addEventListener('click', () => closePopup(popupAdd));
+closeAddPopupButton.addEventListener('click', () => {
+  formAdd.reset();
+  closePopup(popupAdd);
+});
 //
-formAdd.addEventListener('submit', submitHandlerFormAdd);
+formAdd.addEventListener('submit', formAddCardSubmitHandler);
 
 
 //слушатель popupPicture, закрытие
