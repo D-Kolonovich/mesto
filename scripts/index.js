@@ -32,10 +32,27 @@ const popupPictureTypeClose = popupContainer.querySelector('.popup__button_type_
 // открытие popup
 function openPopup(popup) {
     popup.classList.add('popup_opened');
+    document.addEventListener('click', closePopupOverlay);
+    document.addEventListener('keydown', closePopupEsc);
 }
 //  закрытие popup
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', closePopupEsc);
+}
+//закрыие popup на Esc
+function closePopupEsc(evt) {
+  if (evt.key === 'Escape') {
+    const popup = document.querySelector('.popup_opened');
+    closePopup(popup);
+  }
+}
+//закрытие popup на overlay
+function closePopupOverlay(evt) {
+  if (evt.target.classList.contains('popup')) {
+    const popup = document.querySelector('.popup_opened');
+    closePopup(popup);
+  }
 }
 
 // Обработчик «отправки» формы, хотя пока
@@ -90,19 +107,34 @@ initialCards.forEach(item => {
 // Обработчик «отправки» формы Add, хотя пока
 // она никуда отправляться не будет
 function formAddCardSubmitHandler(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.                         
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+  const inputList = Array.from(formAdd.querySelectorAll(reviewFrame.inputSelector));
+  const buttonElement = formAdd.querySelector(reviewFrame.submitButtonSelector);                     
   // 
   renderCard({   
     name: inputFormTitle.value,
     link: inputFormLink.value
   });
   formAdd.reset();
+  toggleButtonState(inputList,buttonElement);
   closePopup(popupAdd);//закрытие popupAdd
+}
+
+//функция удаления ошибок при вводе
+function removeErrorsInput(formElement) {
+  const inputList = Array.from(formElement.querySelectorAll('.form__info'));
+
+  inputList.forEach(inputList => {
+    if (!inputList.validity.valid) {
+      hideInputError(formElement, inputList); //скрывать ошибку ввода
+    }
+  });
 }
 
 //слушатель
 editButton.addEventListener('click', () => {
   openPopup(popupEdit);
+  removeErrorsInput(formEditProfile);
   inputName.value = profileName.textContent;
   inputjob.value = profileDescription.textContent;
 });
@@ -114,7 +146,10 @@ formEditProfile.addEventListener('submit', formEditProfileSubmitHandler);
 editProfileCloseBtn.addEventListener('click', () => closePopup(popupEdit));
 
 //слушатель открыть popupAdd
-openAddPopupButton.addEventListener('click', () => openPopup(popupAdd));
+openAddPopupButton.addEventListener('click', () => {
+  openPopup(popupAdd);
+  removeErrorsInput(formAdd);
+});
 //слушатель закрыть popupAdd добавление карточки
 closeAddPopupButton.addEventListener('click', () => {
   formAdd.reset();
