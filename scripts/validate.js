@@ -1,7 +1,7 @@
 const reviewFrame = {
 formSelector: '.form',
   inputSelector: '.form__info',
-  submitButtonSelector: '.button_submit_selector',
+  submitButtonSelector: '.form__button-submit',
   inactiveButtonClass: 'form__button_disabled',
   inputErrorClass: 'form__info_type_error',
   errorClass: 'form__input-error_active'
