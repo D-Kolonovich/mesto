@@ -7,33 +7,33 @@ formSelector: '.form',
   errorClass: 'form__input-error_active'
 }
 
-// показать ошибку(текст ошибки) ввода
-function showInputError(formElement, inputElement, errorMessage) {
-    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+// функция показывает ошибку(текст ошибки) ввода (добавляет класс с ошибкой)
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add(reviewFrame.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(reviewFrame.errorClass);
-}
+};
 
-// скрыть ошибку(текст ошибки) ввода
-function hideInputError(formElement, inputElement) {
+// функция(текст ошибки ввода) удаляет класс с ошибкой
+const hideInputError = (formElement, inputElement) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.remove(reviewFrame.inputErrorClass);
     errorElement.classList.remove(reviewFrame.errorClass);
     errorElement.textContent = '';
-  }
+  };
 
-// проверка валидности ввода поля
-function checkInputValidity(formElement, inputElement) {
+// функция проверки валидности ввода поля
+const checkInputValidity = (formElement, inputElement) => {
     if (!inputElement.validity.valid) {
       showInputError(formElement, inputElement, inputElement.validationMessage);
     } else {
       hideInputError(formElement, inputElement);
     }
-  }
+  };
 
 // установление слушателей событий всем полям формы
-function setEventListeners (formElement) {
+const setEventListeners = (formElement) => {
     const inputList = Array.from(formElement.querySelectorAll(reviewFrame.inputSelector));
     const buttonElement = formElement.querySelector(reviewFrame.submitButtonSelector);
     toggleButtonState(inputList, buttonElement);
@@ -44,17 +44,17 @@ function setEventListeners (formElement) {
         toggleButtonState(inputList, buttonElement);
       });
     });
-  }
+  };
 
-  //проверка на недопустимый ввод
-  function hasInvalidInput(inputList) {
+  //функция проверка на недопустимый ввод
+  const hasInvalidInput = (inputList) => {
     return inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
-  }
+  };
   
-// переключение состояние кнопки
-function toggleButtonState(inputList, buttonElement) {
+//функция переключение состояние кнопки
+const toggleButtonState = (inputList, buttonElement) => {
     // Если есть хотя бы один невалидный инпут
     if (hasInvalidInput(inputList)) {
       buttonElement.setAttribute('disabled', true);
@@ -65,11 +65,11 @@ function toggleButtonState(inputList, buttonElement) {
       // иначе сделай кнопку активной
       buttonElement.classList.remove(reviewFrame.inactiveButtonClass);
     }
-  }
+  };
 
-//
-function enableValidation() {
-    const formList = Array.from(document.querySelectorAll('.form'));
+// Функция запуска проверки
+const enableValidation = (frameObj) => {
+    const formList = Array.from(document.querySelectorAll(frameObj.formSelector));
     formList.forEach((formElement) => {
       formElement.addEventListener('submit', function (evt) {
         evt.preventDefault();
