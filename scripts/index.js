@@ -39,6 +39,8 @@ function openPopup(popup) {
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', closePopupEsc);
+    document.removeEventListener('click', closePopupOverlay);
+
 }
 //закрыие popup на Esc
 function closePopupEsc(evt) {
@@ -50,8 +52,7 @@ function closePopupEsc(evt) {
 //закрытие popup на overlay
 function closePopupOverlay(evt) {
   if (evt.target.classList.contains('popup')) {
-    const popup = document.querySelector('.popup_opened');
-    closePopup(popup);
+    closePopup(evt.target);
   }
 }
 
@@ -100,9 +101,8 @@ function renderCard(item) {
   }
 
 // массив    каждый елемент
-initialCards.forEach(item => {
-  renderCard(item);
-});
+initialCards.forEach(renderCard);
+
 
 // Обработчик «отправки» формы Add, хотя пока
 // она никуда отправляться не будет
@@ -123,7 +123,7 @@ function formAddCardSubmitHandler(evt) {
 //функция удаления ошибок при вводе
 function removeErrorsInput(formElement) {
   const inputList = Array.from(formElement.querySelectorAll('.form__info'));
-
+  formElement.reset();
   inputList.forEach(inputList => {
     if (!inputList.validity.valid) {
       hideInputError(formElement, inputList); //скрывать ошибку ввода
