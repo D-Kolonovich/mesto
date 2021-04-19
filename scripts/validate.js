@@ -8,40 +8,40 @@ formSelector: '.form',
 }
 
 // функция показывает ошибку(текст ошибки) ввода (добавляет класс с ошибкой)
-const showInputError = (formElement, inputElement, errorMessage) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add(reviewFrame.inputErrorClass);
+const showInputError = (formElement, inputElement, errorMessage, frameObj) => {
+    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add(frameObj.inputErrorClass);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add(reviewFrame.errorClass);
+  errorElement.classList.add(frameObj.errorClass);
 };
 
 // функция(текст ошибки ввода) удаляет класс с ошибкой
-const hideInputError = (formElement, inputElement) => {
+const hideInputError = (formElement, inputElement, frameObj) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove(reviewFrame.inputErrorClass);
-    errorElement.classList.remove(reviewFrame.errorClass);
+    inputElement.classList.remove(frameObj.inputErrorClass);
+    errorElement.classList.remove(frameObj.errorClass);
     errorElement.textContent = '';
   };
 
 // функция проверки валидности ввода поля
-const checkInputValidity = (formElement, inputElement) => {
+const checkInputValidity = (formElement, inputElement, frameObj) => {
     if (!inputElement.validity.valid) {
-      showInputError(formElement, inputElement, inputElement.validationMessage);
+      showInputError(formElement, inputElement, inputElement.validationMessage, frameObj);
     } else {
-      hideInputError(formElement, inputElement);
+      hideInputError(formElement, inputElement, frameObj);
     }
   };
 
 // установление слушателей событий всем полям формы
-const setEventListeners = (formElement) => {
-    const inputList = Array.from(formElement.querySelectorAll(reviewFrame.inputSelector));
-    const buttonElement = formElement.querySelector(reviewFrame.submitButtonSelector);
-    toggleButtonState(inputList, buttonElement);
+const setEventListeners = (formElement, frameObj) => {
+    const inputList = Array.from(formElement.querySelectorAll(frameObj.inputSelector));
+    const buttonElement = formElement.querySelector(frameObj.submitButtonSelector);
+    toggleButtonState(inputList, buttonElement, frameObj);
     inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', function () {
-        checkInputValidity(formElement, inputElement);
+        checkInputValidity(formElement, inputElement, frameObj);
         // чтобы проверять его при изменении любого из полей
-        toggleButtonState(inputList, buttonElement);
+        toggleButtonState(inputList, buttonElement, frameObj);
       });
     });
   };
@@ -54,16 +54,16 @@ const setEventListeners = (formElement) => {
   };
   
 //функция переключение состояние кнопки
-const toggleButtonState = (inputList, buttonElement) => {
+const toggleButtonState = (inputList, buttonElement, frameObj) => {
     // Если есть хотя бы один невалидный инпут
-    if (hasInvalidInput(inputList)) {
+    if (hasInvalidInput(inputList)) {                             ////////////////////
       buttonElement.setAttribute('disabled', true);
       // сделай кнопку неактивной
-      buttonElement.classList.add(reviewFrame.inactiveButtonClass);
+      buttonElement.classList.add(frameObj.inactiveButtonClass);
     } else {
       buttonElement.removeAttribute('disabled');
       // иначе сделай кнопку активной
-      buttonElement.classList.remove(reviewFrame.inactiveButtonClass);
+      buttonElement.classList.remove(frameObj.inactiveButtonClass);
     }
   };
 
@@ -74,7 +74,7 @@ const enableValidation = (frameObj) => {
       formElement.addEventListener('submit', function (evt) {
         evt.preventDefault();
       });
-        setEventListeners(formElement);
+        setEventListeners(formElement, frameObj);
       
     });
     
