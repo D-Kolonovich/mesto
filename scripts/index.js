@@ -116,17 +116,17 @@ function formAddCardSubmitHandler(evt) {
     link: inputFormLink.value
   });
   formAdd.reset();
-  toggleButtonState(inputList,buttonElement);
+  toggleButtonState(inputList,buttonElement, reviewFrame);
   closePopup(popupAdd);//закрытие popupAdd
 }
 
 //функция удаления ошибок при вводе
-function removeErrorsInput(formElement) {
+function removeErrorsInput(formElement, frameObj) {
   const inputList = Array.from(formElement.querySelectorAll('.form__info'));
   formElement.reset();
   inputList.forEach(inputList => {
     if (!inputList.validity.valid) {
-      hideInputError(formElement, inputList); //скрывать ошибку ввода
+      hideInputError(formElement, inputList, frameObj); //скрывать ошибку ввода
     }
   });
 }
@@ -134,9 +134,10 @@ function removeErrorsInput(formElement) {
 //слушатель
 editButton.addEventListener('click', () => {
   openPopup(popupEdit);
-  removeErrorsInput(formEditProfile);
+  removeErrorsInput(formEditProfile, reviewFrame);
   inputName.value = profileName.textContent;
   inputjob.value = profileDescription.textContent;
+  
 });
 
 // Прикрепляем обработчик к форме:
@@ -148,7 +149,7 @@ editProfileCloseBtn.addEventListener('click', () => closePopup(popupEdit));
 //слушатель открыть popupAdd
 openAddPopupButton.addEventListener('click', () => {
   openPopup(popupAdd);
-  removeErrorsInput(formAdd);
+  removeErrorsInput(formAdd, reviewFrame);
 });
 //слушатель закрыть popupAdd добавление карточки
 closeAddPopupButton.addEventListener('click', () => {
