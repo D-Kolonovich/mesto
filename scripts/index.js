@@ -1,4 +1,4 @@
-import { initialCards, validatorConfig, popupEditConfig, popupAddConfig, popupImageConfig, formEditProfile, popupEdit, popupAdd, formAdd, popupPicture} from './initialCards.js';
+import { initialCards, validatorConfig, popupEditConfig, popupAddConfig, popupImageConfig, formEditProfile, popupEdit, popupAdd, formAdd, popupPicture} from './constants.js';
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
@@ -17,20 +17,12 @@ function openEditProfilePopup() {
 };
 
 function openAddCardPopup() {
+  formAdd.reset();
   addCardFormValidator.toggleButtonState();
   addCardFormValidator.removeInputErrors();
-  formAdd.reset();
 
   openPopup(popupAdd);
 };
-
-function openImagePopup(link, name) {
-  popupImageConfig.popupImage.src = link;
-  popupImageConfig.popupImage.alt = name;
-  popupImageConfig.popupDescription.textContent = name;
-
-  openPopup(popupPicture);
-}
 
 // открытие popup
 function openPopup(popup) {
@@ -71,12 +63,11 @@ function formEditProfileSubmitHandler (evt) {
 }
 
 function openPopupImage(link, name) {
-  popupPicture.classList.add('popup_opened');
+  openPopup(popupPicture);
   popupImageConfig.popupImage.src = link;
   popupImageConfig.popupImage.alt = name;
   popupImageConfig.popupDescription.textContent = name;
 
-  document.addEventListener('keydown', closePopupEsc);
 }
 // создание экземпляра класса Card    
 function renderCard(item) {
@@ -95,15 +86,12 @@ initialCards.forEach(item => {
 // она никуда отправляться не будет
 function formAddCardSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-  //const inputList = Array.from(formAdd.querySelectorAll(validatorConfig.inputSelector));
-  //const buttonElement = formAdd.querySelector(validatorConfig.submitButtonSelector);                     
-  // 
+  
   renderCard({   
     name: popupAddConfig.inputFormTitle.value,
     link: popupAddConfig.inputFormLink.value
   });
   formAdd.reset();
-  //toggleButtonState(inputList,buttonElement, validatorConfig);
   closePopup(popupAdd);//закрытие popupAdd
 }
 
@@ -120,7 +108,6 @@ function formAddCardSubmitHandler(evt) {
 
 //слушатель
 popupEditConfig.editButton.addEventListener('click', () => {
-  openPopup(popupEdit);
   removeErrorsInput(popupEditConfig.formEditProfile, validatorConfig);
   popupEditConfig.inputName.value = popupEditConfig.profileName.textContent;
   popupEditConfig.inputjob.value = popupEditConfig.profileDescription.textContent;
