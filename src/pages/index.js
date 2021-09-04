@@ -13,16 +13,14 @@ editProfileFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(validatorConfig, formAdd);
 addCardFormValidator.enableValidation();
 
-const renderList = new Section ({
+const cardList = new Section ({
   items: initialCards,
   renderer: (item) => {
-    renderCard(item);
-    // const card = renderCard(item);
-    // renderList.addItem(card);
+    cardList.addItem(createCard(item));
   }}, '.elements'
 );
 
-renderList.renderItems();
+cardList.renderItems();
 
 const userInfo = new UserInfo({
   name: popupEditConfig.profileName,
@@ -37,8 +35,8 @@ const popupEdit = new PopupWithForm({ popupSelector: popupEditSelector, handlerF
 
 const popupAdd = new PopupWithForm ({ popupSelector: popupAddSelector, 
   handlerFormSubmit: (data) => {
-    renderCard(data);
-    // renderList.addItem(card);
+    createCard(data);
+    // cardList.addItem(card);
     // popupAdd.close();
   }
 });
@@ -46,7 +44,7 @@ const popupAdd = new PopupWithForm ({ popupSelector: popupAddSelector,
 const popupPicture = new PopupWithImage(popupPictureSelector);
 
 // создание экземпляра класса Card 
-function renderCard(item) {
+function createCard(item) {
   const card = new Card({
     name: item.name,
     link: item.link
@@ -59,11 +57,22 @@ function renderCard(item) {
     }
   }, '.template-element');
   const cardElement = card.generateCard();
-  renderList.addItem(cardElement);
+  return cardElement;
 }
 
+// function () {
+
+// }
+
+function openEditProfilePopup(userData) {
+  popupEditConfig.inputName.value = userData.name;
+  popupEditConfig.inputjob.value = userData.job;
+};
+
 // открытие editProfilePopup
-popupEditConfig.editButton.addEventListener('click', () => popupEdit.open());
+popupEditConfig.editButton.addEventListener('click', () => {
+  openEditProfilePopup(userInfo.getUserInfo());
+  popupEdit.open()});
 
 // открытие addCardPopup
 popupAddConfig.openAddPopupButton.addEventListener('click', () => popupAdd.open());
