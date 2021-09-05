@@ -35,8 +35,8 @@ const popupEdit = new PopupWithForm({ popupSelector: popupEditSelector, handlerF
 
 const popupAdd = new PopupWithForm ({ popupSelector: popupAddSelector, 
   handlerFormSubmit: (data) => {
-    createCard(data);
-    // cardList.addItem(card);
+    const card = createCard(data);
+    cardList.addItem(card);
     // popupAdd.close();
   }
 });
@@ -60,11 +60,14 @@ function createCard(item) {
   return cardElement;
 }
 
-// function () {
-
-// }
+function openAddPopup() {
+  addCardFormValidator.toggleButtonState();
+  addCardFormValidator.removeInputErrors();
+  popupAdd.open();
+}
 
 function openEditProfilePopup(userData) {
+  editProfileFormValidator.removeInputErrors();
   popupEditConfig.inputName.value = userData.name;
   popupEditConfig.inputjob.value = userData.job;
 };
@@ -75,4 +78,4 @@ popupEditConfig.editButton.addEventListener('click', () => {
   popupEdit.open()});
 
 // открытие addCardPopup
-popupAddConfig.openAddPopupButton.addEventListener('click', () => popupAdd.open());
+popupAddConfig.openAddPopupButton.addEventListener('click', openAddPopup);
