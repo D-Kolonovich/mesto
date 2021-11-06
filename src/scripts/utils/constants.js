@@ -56,7 +56,7 @@ popupPictureTypeClose : popupContainer.querySelector('.popup__button_type_close'
 
 const PopupAvatarEditConfig = {
   PopupAvatarEdit: '.popup_type_edit-avatar',
-  PopupOpenAvatarEditBtn: document.querySelector('.profile__button-avatar_type_edit'),
+  PopupOpenAvatarEditBtn: document.querySelector('.profile__button-avatar'),
   avatarEditForm: document.forms.avatar,
   InputAvatar: document.querySelector('.form__info_type_avatar-link'),
   profileAvatar: document.querySelector('.profile__avatar')
