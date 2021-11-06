@@ -41,3 +41,7 @@
 @import url("../blocks/form/__input-error/_active/form__input-error_active.css");
 @import url("../blocks/form/__info/_type/form__info_type_error.css");
 @import url("../blocks/form/__button/_disabled/form__button_disabled.css");
+@import url("../blocks/element/__like-number/element__like-number.css");
+@import url("../blocks/form/__title/form__title.css");
+@import url("../blocks/profile/__wrap-avatar/profile__wrap-avatar.css");
+@import url("../blocks/profile/__avatar/_type/profile__avatar_type_edit.css");
