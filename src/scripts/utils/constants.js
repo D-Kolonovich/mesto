@@ -1,30 +1,3 @@
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
-
 const validatorConfig = {
     formSelector: '.form',
       inputSelector: '.form__info',
@@ -56,7 +29,7 @@ const popupAddElement = document.querySelector('.popup_type_add-card');
 const formAdd = document.querySelector('.form-add');
 
 const popupAddConfig = {
-  popupAdd : popupAddElement,  // попап добавить 
+  popupAdd : '.popup_type_add-card',  // попап добавить 
   openAddPopupButton : document.querySelector('.profile__button_type_add'), // кнопка открытия popupAdd
   closeAddPopupButton : popupAddElement.querySelector('.popup__button'), // кнопка закрытия popupAdd
   formAdd : formAdd, // форма
@@ -81,4 +54,29 @@ popupContainer : popupContainer,
 popupPictureTypeClose : popupContainer.querySelector('.popup__button_type_close')
 };
 
-export { initialCards, validatorConfig, popupEditConfig, popupAddConfig, popupImageConfig, formEditProfile, popupEditElement, popupEditSelector, popupAddSelector, popupPictureSelector, popupAddElement, formAdd, popupPictureElement, popupContainer};
+const PopupAvatarEditConfig = {
+  PopupAvatarEdit: '.popup_type_edit-avatar',
+  PopupOpenAvatarEditBtn: document.querySelector('.profile__avatar_type_edit'),
+  avatarEditForm: document.forms.avatar,
+  InputAvatar: document.querySelector('.form__info_type_avatar-link'),
+  profileAvatar: document.querySelector('.profile__avatar')
+}
+
+const deleteConfirmConfig = {
+  PopupConfirmDelete: '.popup_type_confirm-delete',
+  deleteConfirmBtn: document.querySelector('.button_action_confirm')
+}
+
+const loaderConfig = {
+  loader: document.querySelector('.loader'),
+  visibleClassLoader: 'visible_loader',
+  cards: document.querySelector('.elements'),
+  profile: document.querySelector('.profile'),
+  hiddenClassSection: 'page__section_hidden',
+  dotsLoader: document.querySelector('.dots-loader'),
+  visibleClassDotsLoader: 'dots-loader_visible',
+  footer: document.querySelector('.footer'),
+  classFooterFixed: 'footer_fixed'
+}
+
+export { validatorConfig, popupEditConfig, popupAddConfig, popupImageConfig, formEditProfile, popupEditElement, popupEditSelector, popupAddSelector, popupPictureSelector, popupAddElement, formAdd, popupPictureElement, popupContainer, PopupAvatarEditConfig, deleteConfirmConfig, loaderConfig};

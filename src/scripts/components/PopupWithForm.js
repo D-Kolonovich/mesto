@@ -1,7 +1,7 @@
 import Popup from './Popup.js';
 
 export default class PopupWithForm extends Popup {
-  constructor( { popupSelector, handlerFormSubmit } ) {
+  constructor( popupSelector, {handlerFormSubmit}) {
     super(popupSelector);
     this._handlerFormSubmit = handlerFormSubmit;
     this._form = this._popup.querySelector('.form');
@@ -24,6 +24,7 @@ export default class PopupWithForm extends Popup {
 
   _submitForm = (evt) => {
     evt.preventDefault();
+    this.renderLoading(true);
     this._handlerFormSubmit(this._getInputValues());
     this.close();
   }
@@ -34,5 +35,13 @@ export default class PopupWithForm extends Popup {
     this._form.reset();
     this._submitbutton.setAttribute('disabled', true);
     this._submitbutton.classList.add('form__button_disabled');
+  }
+
+  renderLoading(isLoading, buttoneText) {
+    if (isLoading) {
+      this._submitbutton.textContent = buttoneText
+    } else {
+      this._submitbutton.textContent = buttoneText
+    }
   }
 }
