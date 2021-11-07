@@ -54,29 +54,29 @@ popupContainer : popupContainer,
 popupPictureTypeClose : popupContainer.querySelector('.popup__button_type_close')
 };
 
-const PopupAvatarEditConfig = {
-  PopupAvatarEdit: '.popup_type_edit-avatar',
-  PopupOpenAvatarEditBtn: document.querySelector('.profile__button-avatar'),
+const popupAvatarEditConfig = {
+  popupAvatarEdit: '.popup_type_edit-avatar',
+  popupOpenAvatarEditBtn: document.querySelector('.profile__button-avatar'),
   avatarEditForm: document.forms.avatar,
-  InputAvatar: document.querySelector('.form__info_type_avatar-link'),
+  inputAvatar: document.querySelector('.form__info_type_avatar-link'),
   profileAvatar: document.querySelector('.profile__avatar')
 }
 
 const deleteConfirmConfig = {
-  PopupConfirmDelete: '.popup_type_confirm-delete',
+  popupConfirmDelete: '.popup_type_confirm-delete',
   deleteConfirmBtn: document.querySelector('.button_action_confirm')
 }
 
-const loaderConfig = {
-  loader: document.querySelector('.loader'),
-  visibleClassLoader: 'visible_loader',
-  cards: document.querySelector('.elements'),
-  profile: document.querySelector('.profile'),
-  hiddenClassSection: 'page__section_hidden',
-  dotsLoader: document.querySelector('.dots-loader'),
-  visibleClassDotsLoader: 'dots-loader_visible',
-  footer: document.querySelector('.footer'),
-  classFooterFixed: 'footer_fixed'
-}
+// const loaderConfig = {
+//   loader: document.querySelector('.loader'),
+//   visibleClassLoader: 'visible_loader',
+//   cards: document.querySelector('.elements'),
+//   profile: document.querySelector('.profile'),
+//   hiddenClassSection: 'page__section_hidden',
+//   dotsLoader: document.querySelector('.dots-loader'),
+//   visibleClassDotsLoader: 'dots-loader_visible',
+//   footer: document.querySelector('.footer'),
+//   classFooterFixed: 'footer_fixed'
+// }
 
-export { validatorConfig, popupEditConfig, popupAddConfig, popupImageConfig, formEditProfile, popupEditElement, popupEditSelector, popupAddSelector, popupPictureSelector, popupAddElement, formAdd, popupPictureElement, popupContainer, PopupAvatarEditConfig, deleteConfirmConfig, loaderConfig};
+export { validatorConfig, popupEditConfig, popupAddConfig, popupImageConfig, formEditProfile, popupEditElement, popupEditSelector, popupAddSelector, popupPictureSelector, popupAddElement, formAdd, popupPictureElement, popupContainer, popupAvatarEditConfig, deleteConfirmConfig};

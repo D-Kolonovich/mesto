@@ -1,5 +1,5 @@
 import './index.css';
-import { validatorConfig, popupEditConfig, popupAddConfig, popupImageConfig, formEditProfile, popupEditSelector, popupAddSelector, popupPictureSelector, popupEditElement, popupAddElement, formAdd, popupPictureElement, PopupAvatarEditConfig, deleteConfirmConfig, loaderConfig} from '../scripts/utils/constants.js';
+import { validatorConfig, popupEditConfig, popupAddConfig, popupImageConfig, formEditProfile, popupEditSelector, popupAddSelector, popupPictureSelector, popupEditElement, popupAddElement, formAdd, popupPictureElement, popupAvatarEditConfig, deleteConfirmConfig} from '../scripts/utils/constants.js';
 import Section from '../scripts/components/Section.js';
 import UserInfo from '../scripts/components/UserInfo.js';
 import PopupWithImage from '../scripts/components/PopupWithImage.js';
@@ -15,7 +15,7 @@ let userId = {};
 const userInfo = new UserInfo({ 
   name: popupEditConfig.profileName, 
   job: popupEditConfig.profileDescription, 
-  avatar: PopupAvatarEditConfig.profileAvatar});
+  avatar: popupAvatarEditConfig.profileAvatar});
 
 /* -получение данных с сервера- */
 
@@ -52,7 +52,7 @@ const editProfileFormValidator = new FormValidator(validatorConfig, formEditProf
 editProfileFormValidator.enableValidation();
 const addCardFormValidator = new FormValidator(validatorConfig, formAdd);
 addCardFormValidator.enableValidation();
-const avatarEditFormValidator = new FormValidator(validatorConfig, PopupAvatarEditConfig.avatarEditForm);
+const avatarEditFormValidator = new FormValidator(validatorConfig, popupAvatarEditConfig.avatarEditForm);
 avatarEditFormValidator.enableValidation();
 
 const popupPicture = new PopupWithImage(popupPictureSelector);
@@ -72,16 +72,16 @@ const popupEdit = new PopupWithForm(popupEditSelector, {
 });
 
 // попап с формой редактирования аватара
-const PopupAvatarEdit = new PopupWithForm(PopupAvatarEditConfig.PopupAvatarEdit, {
+const popupAvatarEdit = new PopupWithForm(popupAvatarEditConfig.popupAvatarEdit, {
   handlerFormSubmit: (data) => {
-    PopupAvatarEdit.renderLoading(true, ('Сохранение...'));
+    popupAvatarEdit.renderLoading(true, ('Сохранение...'));
     api.setAvatar(data)
       .then((result) => {
         userInfo.setUserInfo(result);
-        PopupAvatarEdit.close();
+        popupAvatarEdit.close();
       })
       .catch((err) => console.log(err))
-      .finally(() => PopupAvatarEdit.renderLoading(false, 'Сохранить'));
+      .finally(() => popupAvatarEdit.renderLoading(false, 'Сохранить'));
   }
 });
 
@@ -95,19 +95,21 @@ const popupAdd = new PopupWithForm(popupAddConfig.popupAdd, {
         popupAdd.close();
       })
       .catch((err) => console.log(err))
-      .finally(() => popupAdd.renderLoading(false, 'создать'));
+      .finally(() => popupAdd.renderLoading(false, 'Создать'));
   }
 });
 
 // попап с запросом на удаление карточки
-const PopupConfirmDelete = new PopupWithConfirmation(deleteConfirmConfig.PopupConfirmDelete, deleteConfirmConfig.deleteConfirmBtn, {
+const popupConfirmDelete = new PopupWithConfirmation(deleteConfirmConfig.popupConfirmDelete, deleteConfirmConfig.deleteConfirmBtn, {
   handleDeleteCard: (card) => {
+    popupConfirmDelete.renderLoading(true, ('Удаление...'));
     api.deleteCard(card.getCardId())
         .then(() => {
           card.handleDeleteCard();
-          PopupConfirmDelete.close()
+          popupConfirmDelete.close()
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
+        .finally(() => popupConfirmDelete.renderLoading(false, 'Да'));
   }
 });
 
@@ -120,7 +122,7 @@ function createCard(item) {
       });
     },
     handleDeleteCard: () => {
-      PopupConfirmDelete.open(card);
+      popupConfirmDelete.open(card);
     },
     handleLikeCard: () => {
       const actualUserLikedCard =  card.checkLikeStatus();
@@ -149,7 +151,7 @@ function openEditProfilePopup(userData) {
 function openAvatarEditPopup() {
   avatarEditFormValidator.toggleButtonState();
   avatarEditFormValidator.removeInputErrors();
-  PopupAvatarEdit.open();
+  popupAvatarEdit.open();
 }
 
 function openAddPopup() {
@@ -165,4 +167,10 @@ popupEditConfig.editButton.addEventListener('click', () => { openEditProfilePopu
 // открытие addCardPopup
 popupAddConfig.openAddPopupButton.addEventListener('click', openAddPopup);
 
-PopupAvatarEditConfig.PopupOpenAvatarEditBtn.addEventListener('click', () => openAvatarEditPopup());
+popupAvatarEditConfig.popupOpenAvatarEditBtn.addEventListener('click', () => openAvatarEditPopup());
+
+popupPicture.setEventListeners();
+popupEdit.setEventListeners();
+popupAvatarEdit.setEventListeners();
+popupAdd.setEventListeners();
+popupConfirmDelete.setEventListeners();

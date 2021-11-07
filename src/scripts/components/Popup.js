@@ -2,19 +2,19 @@ export default class Popup {
     constructor(popupSelector) {
       this._popup = document.querySelector(popupSelector);
       this.closeButton = this._popup.querySelector('.popup__button');
+      this._submitbutton = this._popup.querySelector('.form__button-submit');
     }
   
     // открытие popup
     open() {
         this._popup.classList.add('popup_opened');
-        this._setEventListeners();
+        document.addEventListener('keydown', this._handleEscClose);
         
 }
 //  закрытие popup
-    close(popup) {
+    close() {
         this._popup.classList.remove('popup_opened');
-        this._removeEventListener();
-
+        document.removeEventListener('keydown', this._handleEscClose);
 }
 
     _handleEscClose = (evt) => { 
@@ -30,16 +30,19 @@ export default class Popup {
     }
   }
 
-    _setEventListeners() {
+    setEventListeners() {
       
       this.closeButton.addEventListener('click', () => this.close());
       this._popup.addEventListener('click', this._closePopupOverlay);
-      document.addEventListener('keydown', this._handleEscClose);
+      
     }
 
-    _removeEventListener() {
-      this.closeButton.removeEventListener('click', () => this.close());
-      this._popup.removeEventListener('click', this._closePopupOverlay);
-      document.removeEventListener('keydown', this._handleEscClose);
+    renderLoading(isLoading, buttoneText) {
+      if (isLoading) {
+        this._submitbutton.textContent = buttoneText
+      } else {
+        this._submitbutton.textContent = buttoneText
+      }
     }
+
   }
