@@ -5,43 +5,36 @@ export default class PopupWithForm extends Popup {
     super(popupSelector);
     this._handlerFormSubmit = handlerFormSubmit;
     this._form = this._popup.querySelector('.form');
-    this._submitbutton = this._form.querySelector('.form__button-submit');
+    // console.log(this._submitbutton)
   }
 
   _getInputValues() {
     const inputValues = {};
-    const inputSelector = Array.from(this._form.querySelectorAll('.form__info'));
+    const inputSelector = [...this._form.querySelectorAll('.form__info')];
     inputSelector.forEach(input => {
         inputValues[input.name] = input.value;
     });
     return inputValues;
   }
 
-  _setEventListeners() {
-    super._setEventListeners();
+  setEventListeners() {
+    super.setEventListeners();
     this._form.addEventListener('submit', this._submitForm);
   }
 
   _submitForm = (evt) => {
     evt.preventDefault();
-    this.renderLoading(true);
     this._handlerFormSubmit(this._getInputValues());
-    this.close();
+    // this.close();
   }
 
 
   close() {
     super.close();
     this._form.reset();
-    this._submitbutton.setAttribute('disabled', true);
-    this._submitbutton.classList.add('form__button_disabled');
+    // this._submitbutton.setAttribute('disabled', true);
+    // this._submitbutton.classList.add('form__button_disabled');
   }
 
-  renderLoading(isLoading, buttoneText) {
-    if (isLoading) {
-      this._submitbutton.textContent = buttoneText
-    } else {
-      this._submitbutton.textContent = buttoneText
-    }
-  }
+  
 }
